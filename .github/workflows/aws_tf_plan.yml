@@ -48,17 +48,12 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.2
         with:
           terraform_version: ${{ inputs.tf_version }}
-          cli_config_credentials_token: "5vAdvrytAYO0DA.atlasv1.SaknyOKTzkg59rb3Hhz3Y4PGLa5EpzBay9Z0EIypdpvJwrYD9ynmQhCet8xImanz2RM"
+          cli_config_credentials_token: "${{ secrets.cli_config_credentials_token }}"
 
       - name: Terraform Init
         id: init
         run: terraform init
       
-    #   - name: Terraform Init
-    #     id: init
-    #     run: terraform init
-    #     env:
-    #       TF_TOKEN_app_terraform_io: ${{ secrets.cli_config_credentials_token }}
 
       - name: Terraform Validate
         id: validate
@@ -67,6 +62,8 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan
+        env:
+          TF_TOKEN_app_terraform_io: ${{ secrets.cli_config_credentials_token }}
         continue-on-error: true
 
       - name: Terraform Plan Status
