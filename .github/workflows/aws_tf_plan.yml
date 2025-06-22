@@ -43,19 +43,23 @@ jobs:
         run: | 
           mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
 
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
         with:
           terraform_version: ${{ inputs.tf_version }}
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.cli_config_credentials_token }}
-        
+          cli_config_credentials_token: "5vAdvrytAYO0DA.atlasv1.SaknyOKTzkg59rb3Hhz3Y4PGLa5EpzBay9Z0EIypdpvJwrYD9ynmQhCet8xImanz2RM"
+
       - name: Terraform Init
         id: init
         run: terraform init
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.cli_config_credentials_token }}
       
+    #   - name: Terraform Init
+    #     id: init
+    #     run: terraform init
+    #     env:
+    #       TF_TOKEN_app_terraform_io: ${{ secrets.cli_config_credentials_token }}
+
       - name: Terraform Validate
         id: validate
         run: terraform validate
