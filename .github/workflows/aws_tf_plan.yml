@@ -1,4 +1,4 @@
-### Reusable workflow to plan terraform deployment, create artifact and upload to workflow artifacts for consumption ###
+### Reusable workflow to plans terraform deployment, create artifact and upload to workflow artifacts for consumption ###
 name: "Build_TF_Plan"
 on:
   workflow_call: #this means whenever call happen from workflow dispatch then only this will run

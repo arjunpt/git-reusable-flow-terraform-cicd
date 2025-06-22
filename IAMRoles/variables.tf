@@ -1,4 +1,4 @@
 variable "role_name" {
   type        = string
-  description = "Specifies the name of the resource group that will be created."
+  description = "Specifiess the name of the resource group that will be created."
 }
