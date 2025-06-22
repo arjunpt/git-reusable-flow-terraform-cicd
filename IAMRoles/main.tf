@@ -1,37 +1,20 @@
-resource "aws_iam_role_policy" "test_policy" {
-  name = "test_policy"
-  role = aws_iam_role.test_role.id
+terraform {
+	required_providers {
+		aws = {
+			source = "hashicorp/aws"
+		}
+	}
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ec2:Describe*",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
+	backend "remote" {
+		hostname = "app.terraform.io"
+		organization = "CloudQuickLabs"
+
+		workspaces {
+			name = "AWSBackup"
+		}
+	}
 }
 
-resource "aws_iam_role" "test_role" {
-  name = var.role_name
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
+provider "aws" {
+	region = "us-east-1"
 }
