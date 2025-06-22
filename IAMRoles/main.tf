@@ -10,7 +10,7 @@ terraform {
 		organization = "CloudQucikLabs"
 
 		workspaces {
-			name = "AWSBackup"
+			name = "AWSbackup"
 		}
 	}
 }
