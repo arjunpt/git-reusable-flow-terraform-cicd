@@ -1,4 +1,5 @@
-name: "iam-cicd.yml"
+name: "IAM_CICD"
+
 on:
   workflow_dispatch:
 
@@ -12,7 +13,6 @@ jobs:
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
  
 #   Deploy_Dev:#
 #     needs: Plan_Dev
