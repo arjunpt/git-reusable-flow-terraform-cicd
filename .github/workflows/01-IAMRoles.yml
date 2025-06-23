@@ -6,19 +6,18 @@ on:
       path:
         description: 'service'
         required: true
-        default: 'IAMRoles'
         type: choice
         options:
+          - IAMRoles
           - EC2
           - S3
       gh_environment:
         description: 'Environment'
         required: true
-        default: 'dev'
         type: choice
         options:
-          - dev
-          - prod
+          - DEV
+          - UAT
 
 jobs:
   Plan_Dev:
