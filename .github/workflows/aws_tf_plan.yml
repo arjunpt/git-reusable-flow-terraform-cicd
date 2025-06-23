@@ -41,7 +41,8 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+           mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.tf_vars_file }} ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+
 
 
       - name: Setup Terraform
