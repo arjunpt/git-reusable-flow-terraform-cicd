@@ -2,36 +2,55 @@ name: "IAM_CICD"
 
 on:
   workflow_dispatch:
+    inputs:
+      path:
+        description: 'Terraform service path (e.g., IAMRoles, VPC)'
+        required: true
+        default: 'IAMRoles'
+      gh_environment:
+        description: 'Environment to deploy (e.g., dev, prod)'
+        required: true
+        default: 'dev'
+      tf_vars_file:
+        description: 'Terraform tfvars file (e.g., dev.tfvars)'
+        required: true
+        default: 'dev.tfvars'
 
 jobs:
   Plan_Dev:
     if: github.ref == 'refs/heads/FeatureBranch1'
     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
     with:
-      path: IAMRoles
-      tf_vars_file: dev.tfvars
-      gh_environment: dev
-    secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
- 
-  Deploy_Dev:
-    needs: Plan_Dev
-    uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_apply.yml@FeatureBranch1
-    with:
-      path: IAMRoles
-      tf_vars_file: dev.tfvars
-      gh_environment: dev
+      path: ${{ github.event.inputs.path }}
+      tf_vars_file: ${{ github.event.inputs.tf_vars_file }}
+      gh_environment: ${{ github.event.inputs.gh_environment }}
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-  Destroy_Dev:
-    uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_destroy.yml@FeatureBranch1
-    with:
-      path: IAMRoles
-      tf_vars_file: dev.tfvars
-      gh_environment: dev
-    secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   Plan_Dev:
+#     if: github.ref == 'refs/heads/FeatureBranch1'
+#     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
+#     with:
+#       path: IAMRoles
+#       tf_vars_file: dev.tfvars
+#       gh_environment: dev
+#     secrets:
+#       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+ 
+#   Deploy_Dev:
+#     needs: Plan_Dev
+#     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_apply.yml@FeatureBranch1
+#     with:
+#       path: IAMRoles
+#       tf_vars_file: dev.tfvars
+#       gh_environment: dev
+#     secrets:
+#       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
 #   Plan_Uat:
 #     if: github.ref == 'refs/heads/main'
