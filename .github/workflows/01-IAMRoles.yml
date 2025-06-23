@@ -24,6 +24,15 @@ jobs:
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+  Destroy_Dev:
+    uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_destroy.yml@FeatureBranch1
+    with:
+      path: IAMRoles
+      tf_vars_file: dev.tfvars
+      gh_environment: dev
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
 #   Plan_Uat:
 #     if: github.ref == 'refs/heads/main'
 #     uses: RekhuGopal/gitreusableflows/.github/workflows/aws_tf_plan.yml@main
