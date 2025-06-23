@@ -4,17 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       path:
-        description: 'Terraform service path (e.g., IAMRoles, VPC)'
+        description: 'service'
         required: true
         default: 'IAMRoles'
+        type: choice
+        options:
+          - EC2
+          - S3
       gh_environment:
-        description: 'Environment to deploy (e.g., dev, prod)'
+        description: 'Environment'
         required: true
         default: 'dev'
-      tf_vars_file:
-        description: 'Terraform tfvars file (e.g., dev.tfvars)'
-        required: true
-        default: 'dev.tfvars'
+        type: choice
+        options:
+          - dev
+          - prod
 
 jobs:
   Plan_Dev:
@@ -22,8 +26,8 @@ jobs:
     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
     with:
       path: ${{ github.event.inputs.path }}
-      tf_vars_file: ${{ github.event.inputs.tf_vars_file }}
       gh_environment: ${{ github.event.inputs.gh_environment }}
+      tf_vars_file: ${{ github.event.inputs.gh_environment }}.tfvars  # 👈 Automatically derived
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
