@@ -10,7 +10,7 @@ on:
         options:
           - IAMRoles
           - EC2
-          - S3
+          - SS3Bucket
       gh_environment:
         description: 'Environment'
         required: true
