@@ -20,7 +20,7 @@ on:
           - UAT
 
 jobs:
-  Plan_Dev:
+  Plan:
     if: github.ref == 'refs/heads/FeatureBranch1'
     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
     with:
@@ -30,32 +30,16 @@ jobs:
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-
-# name: "IAM_CICD"
-
-# on:
-#   workflow_dispatch:
-
-# jobs:
-#   Plan_Dev:
-#     if: github.ref == 'refs/heads/FeatureBranch1'
-#     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
-#     with:
-#       path: IAMRoles
-#       tf_vars_file: dev.tfvars
-#       gh_environment: dev
-#     secrets:
-#       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
  
-#   Deploy_Dev:
-#     needs: Plan_Dev
-#     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_apply.yml@FeatureBranch1
-#     with:
-#       path: IAMRoles
-#       tf_vars_file: dev.tfvars
-#       gh_environment: dev
-#     secrets:
-#       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  Deploy:
+    needs: Plan
+    uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_apply.yml@FeatureBranch1
+    with:
+      path: ${{ github.event.inputs.path }}
+      gh_environment: ${{ github.event.inputs.gh_environment }}
+      tf_vars_file: ${{ github.event.inputs.gh_environment }}.tfvars  # 👈 Automatically derived
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
 
 #   Plan_Uat:
