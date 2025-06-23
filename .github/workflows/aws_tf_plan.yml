@@ -1,5 +1,5 @@
 ### Reusable workflow to plans terraform deployment, create artifact and upload to workflow artifacts for consumption ###
-name: "Terrafor Plan"
+name: "Build_TF_Plan"
 on:
   workflow_call: #this means whenever call happen from workflow dispatch then only this will run
     inputs:
@@ -41,7 +41,8 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+           mv ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.tf_vars_file }} ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+
 
 
       - name: Setup Terraform
