@@ -21,7 +21,6 @@ on:
 
 jobs:
   Plan:
-    if: github.ref == 'refs/heads/FeatureBranch1'
     uses: arjunpt/git-reusable-flow-terraform-cicd/.github/workflows/aws_tf_plan.yml@FeatureBranch1
     with:
       path: ${{ github.event.inputs.path }}
