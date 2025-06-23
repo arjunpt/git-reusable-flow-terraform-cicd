@@ -1,5 +1,5 @@
 ### Reusable workflow to download terraform artifact built by `az_tf_plan` and apply the artifact/plan ###
-name: "Terraform Apply"
+name: "Apply_TF_Plan"
 on:
   workflow_call:
     inputs:
