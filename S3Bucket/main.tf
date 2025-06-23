@@ -7,10 +7,10 @@ terraform {
 
 	backend "remote" {
 		hostname = "app.terraform.io"
-		organization = "CloudQuickLabs"
+		organization = "CloudQucikLabs"
 
 		workspaces {
-			name = "AWSBackup"
+			name = "AWSbackup"
 		}
 	}
 }
@@ -18,3 +18,5 @@ terraform {
 provider "aws" {
 	region = "us-east-1"
 }
+
+#
